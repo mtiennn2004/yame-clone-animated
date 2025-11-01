@@ -1,15 +1,13 @@
 {
   "name": "yame-clone-animated",
-  "private": true,
   "version": "0.0.1",
-  "type": "module",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "postinstall": "chmod +x ./node_modules/.bin/vite || true"
-  }
-
+  },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
