@@ -1,0 +1,151 @@
+/* ========== HERO BANNER ========== */
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  margin: 30px auto;
+  max-width: 1200px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Ảnh nền */
+.hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+/* ========== NỘI DUNG ĐÈ LÊN ẢNH ========== */
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #ffffff;
+  padding: 40px 60px;
+  border-radius: 16px;
+
+  /* Nền mờ nhẹ để dễ đọc chữ */
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(5px);
+}
+
+/* Tiêu đề lớn */
+.hero-content h1 {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Mô tả phụ */
+.hero-content p {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 25px;
+  opacity: 0.9;
+}
+
+/* ========== CÁC NÚT TRÊN BANNER ========== */
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Nút cơ bản */
+.btn {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+/* Nút chính (gradient) */
+.btn-primary {
+  background: linear-gradient(90deg, #00bcd4, #8e24aa);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Nút viền trắng */
+.btn-outline {
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 25px 35px;
+  }
+
+  .hero-content h1 {
+    font-size: 25px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 22px;
+  }
+}
+
+
+.hero-title {
+  text-align: center;
+  font-weight: 800;
+  font-size: 2.8rem;
+  color: white;
+  line-height: 1.2;
+}
+
+/* Hiệu ứng vàng ánh kim */
+.gold {
+  background: linear-gradient(90deg, #FFD700, #FFB700, #FFEA70, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Hiệu ứng ánh sáng chạy qua */
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}

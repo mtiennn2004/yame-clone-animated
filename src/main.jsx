@@ -1,0 +1,32 @@
+// import React from 'react'
+// import { createRoot } from 'react-dom/client'
+// import App from './App.jsx'
+// import './App.css'
+// import './components/ProductGrid.css'
+
+// createRoot(document.getElementById('root')).render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// )
+
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import App from "./App.jsx";
+import SearchSimilar from "./pages/SearchSimilar.jsx";
+
+import "./App.css";
+import "./components/ProductGrid.css";
+
+createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/search-image" element={<SearchSimilar />} />
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
+);
