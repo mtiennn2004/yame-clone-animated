@@ -1,8 +1,12 @@
+
 import React, { useState } from "react";
 import ProductGrid from "../components/ProductGrid.jsx";
 import CompatibleModal from "../components/CompatibleModal.jsx";
 import "./SearchSimilar.css";
 import { Link } from "react-router-dom";
+
+// --- Cấu hình API base ---
+const API_BASE = "https://yame-api-deploy.onrender.com";
 
 function fixPath(p) {
   return (p || "").replace(/^public[\\/]/, "").replaceAll("\\", "/");
@@ -26,6 +30,7 @@ export default function SearchSimilar() {
     setPreview(URL.createObjectURL(f));
   };
 
+  // --- Feature 1: Tìm ảnh tương tự ---
   async function handleSearch() {
     if (!file) {
       setError("Please select a photo first.");
@@ -40,13 +45,17 @@ export default function SearchSimilar() {
       const form = new FormData();
       form.append("file", file);
 
-      const res = await fetch("http://127.0.0.1:8000/search_image?topk=10&rerank=true", {
+      const res = await fetch(`${API_BASE}/search_image?topk=10&rerank=true`, {
         method: "POST",
         body: form,
       });
+
+      if (!res.ok) throw new Error("Lỗi khi gọi API search_image");
+
       const data = await res.json();
       const results = data.results || [];
 
+      // --- Load metadata local (để map ảnh) ---
       const localRes = await fetch("/polyvore_outfits/polyvore_merged_items2.json");
       const localData = await localRes.json();
       const imageMap = {};
@@ -62,31 +71,31 @@ export default function SearchSimilar() {
         price: Math.floor(Math.random() * 400000) + 150000, // 💰 random giá từ 150k–550k
       }));
 
-
-
       setItems(mapped);
     } catch (err) {
+      console.error("❌ Lỗi khi tìm kiếm ảnh tương tự:", err);
       setError("Có lỗi khi tìm kiếm ảnh tương tự.");
     } finally {
       setLoading(false);
     }
   }
 
-  // 👉 Khi click vào 1 item: gọi API /compatible/{item_id}
+  // --- Khi click vào 1 item: gọi API /compatible/{item_id} ---
   async function handleItemClick(item) {
     setBaseItem(item);
     setShowModal(true);
     setCompatible([]);
 
     try {
-      const url = `http://127.0.0.1:8000/compatible/${item.id}?topk=3&candidates=50000`;
+      const url = `${API_BASE}/compatible/${item.id}?topk=3&candidates=50000`;
       const res = await fetch(url, { method: "POST" });
-      if (!res.ok) throw new Error("Lỗi khi lấy dữ liệu phối đồ");
-      const data = await res.json();
 
+      if (!res.ok) throw new Error("Lỗi khi lấy dữ liệu phối đồ");
+
+      const data = await res.json();
       const results = data.results || [];
 
-      // Lấy ảnh từ local JSON
+      // --- Load metadata local ---
       const localRes = await fetch("/polyvore_outfits/polyvore_merged_items2.json");
       const localData = await localRes.json();
       const imageMap = {};
@@ -99,9 +108,8 @@ export default function SearchSimilar() {
         image: imageMap[r.item_id]
           ? `/${imageMap[r.item_id]}`
           : "/polyvore_outfits/images/notfound.jpg",
-        price: Math.floor(Math.random() * 400000) + 150000, // 💰 random giá 150k–550k
+        price: Math.floor(Math.random() * 400000) + 150000,
       }));
-
 
       setCompatible(mapped);
     } catch (err) {
@@ -120,7 +128,7 @@ export default function SearchSimilar() {
       <div className="search-header">
         <h2>Find similar photos (Feature 1)</h2>
         <p>
-          Upload a photo of an outfit to find similar products. 
+          Upload a photo of an outfit to find similar products.
           Click on a product to see matching items.
         </p>
       </div>
